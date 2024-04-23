@@ -1,4 +1,5 @@
-import { HttpClient } from "../HttpClient/HttpClient";
+import { EntryController } from "../Controllers/EntryController";
+import { HttpClient } from "./HttpClient";
 
 export class Router {
     constructor(protected HttpClient: HttpClient){}
@@ -6,7 +7,7 @@ export class Router {
     async init(): Promise<void> 
     {
         this.HttpClient.on('get', '/',async (params:string, body: unknown) => {
-            return ""
+            return new EntryController().index(body)
         })
     }
 }
