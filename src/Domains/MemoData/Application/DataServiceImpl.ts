@@ -1,14 +1,16 @@
-import { inject } from "tsyringe";
+import { inject, injectable } from "tsyringe";
+
 import { DataRepository } from "../Domain/DataRepository";
+import { DataRepositoryEnum } from "../Domain/DataRepositoryEnum";
 import { DataService } from "../Domain/DataService";
 import { IData } from "../Domain/IData";
 
+@injectable()
 export class DataServiceImpl implements DataService {
-    constructor(@inject('DataRepositoryPostgres') private dataRepository: DataRepository) {}
+    constructor(@inject(DataRepositoryEnum.DATA_REPOSITORY) private dataRepository: DataRepository) {}
     
     async store(data: IData[]): Promise<IData[]> {
-        await this.dataRepository.store(data)
-        return data
+        return await this.dataRepository.store(data)
     }
 
     getAll(): Promise<IData[]> {
